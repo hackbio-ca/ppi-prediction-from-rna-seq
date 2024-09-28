@@ -23,22 +23,22 @@ perturb_rbps_sub <- AddMetaData(perturb_rbps_sub, sample_to_rbp_mapping_sub)
 
 # Get pseudo-bulk
 get_cpm_pseudo_bulk <- function(scdata, new_labels, nbds) {
-  sc_sub2 <- matrix(NA, nrow = dim(scdata)[1], ncol = length(nbds))
+  sc_sub <- matrix(NA, nrow = dim(scdata)[1], ncol = length(nbds))
 
   for (i in seq_along(nbds)){
     cols <- which(new_labels == nbds[i])
 
     if(length(cols) > 1) {
-      sc_sub2[, i] <- rowSums(cpm(scdata)[, cols]) / length(cols)
+      sc_sub[, i] <- rowSums(cpm(scdata)[, cols]) / length(cols)
     } else if (length(cols) == 1) {
-      sc_sub2[, i] <- cpm(scdata)[, cols]
+      sc_sub[, i] <- cpm(scdata)[, cols]
     } else {
-      sc_sub2[, i] <- NA
+      sc_sub[, i] <- NA
     }
   }
-  rownames(sc_sub2) <- rownames(scdata)
-  colnames(sc_sub2) <- nbds
-  return(sc_sub2)
+  rownames(sc_sub) <- rownames(scdata)
+  colnames(sc_sub) <- nbds
+  return(sc_sub)
 }
 
 perturb_rbps_sce <- as.SingleCellExperiment(perturb_rbps_sub)
@@ -53,4 +53,4 @@ perturb_rbps_bulk_filtered <- perturb_rbps_bulk[rowSums(perturb_rbps_bulk) > 0, 
 # Coexpression network
 perturb_rbps_coexp <- cor(t(perturb_rbps_bulk_filtered))
 
-write_csv(as.data.frame(perturb_rbps_coexp), "perturb_rbp_coexp.csv")
+write_csv(as.data.frame(perturb_rbps_coexp), "output/perturb_rbp_coexp.csv")
