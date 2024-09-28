@@ -73,3 +73,38 @@ If you have any issues or need help, please open an [issue](https://github.com/h
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
+## Contribution Instructions for Hackathon Group Members
+
+1. Clone the repository. Either use SSH or HTTPS:
+
+```bash
+git clone git@github.com:hackbio-ca/ppi-prediction-from-rna-seq.git
+git clone https://github.com/hackbio-ca/ppi-prediction-from-rna-seq.git
+```
+
+2. Making a branch and implementing changes:
+
+```bash
+git checkout -b your-name
+```
+Use `git status` to check you're on the correct branch. You do not want to implement any features on the `main` branch.
+```
+git add filename
+git commit -m "Changes to filename"
+git push origin your-name
+```
+
+3. Make a pull request. Navigate to your branch on the github repository page, and click **Compare & pull request**. Make sure you compare `main` and the `your-name` branch.
+
+4. The pull request will be reviewed and hopefully accepted. At this point, github will tell you that the `your-name` branch can be safely deleted.
+
+5. Navigate back to your local `main` branch and update, then cleanup.
+
+```bash
+git checkout main
+git pull origin main
+git branch -d your-name
+```
+
+6. Upon implementing a new feature, simply repeat from step 2.
