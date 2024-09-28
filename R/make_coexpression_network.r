@@ -53,4 +53,4 @@ perturb_rbps_bulk_filtered <- perturb_rbps_bulk[rowSums(perturb_rbps_bulk) > 0, 
 # Coexpression network
 perturb_rbps_coexp <- cor(t(perturb_rbps_bulk_filtered))
 
-write_csv(as.data.frame(perturb_rbps_coexp), "output/perturb_rbp_coexp.csv")
+write_csv(as.data.frame(perturb_rbps_coexp), "../output/perturb_rbp_coexp.csv")
