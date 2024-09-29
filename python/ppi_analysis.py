@@ -68,7 +68,9 @@ def full_workflow(in_file, bait_col, prey_col, values_col, top_k, out_file_prefi
 
 if __name__ == '__main__':
     
-    full_workflow('../output/goos2022.preprocessed_PPIs.standardized.tsv', 'gene1', 'gene2', 'conf_score', 100, 'goos2022')
-    full_workflow('../output/huttlin2021.preprocessed_PPIs.standardized.tsv', 'gene1', 'gene2', 'pscore', 100, 'huttlin2021')
-    full_workflow('../output/khoroshkin2024.preprocessed_PPIs.standardized.tsv', 'gene1', 'gene2', 'conf_score', 100, 'khoroshkin2024')
-    full_workflow('../output/johnson2021.preprocessed_PPIs.standardized.tsv', 'gene1', 'gene2', 'pvalue', 100, 'johnson2021', pval=True)
+    # full_workflow('../output/goos2022.preprocessed_PPIs.HEK293.standardized.tsv', 'gene1', 'gene2', 'conf_score', 100, 'goos2022-HEK293')
+    # full_workflow('../output/huttlin2021.preprocessed_PPIs.HEK293T.standardized.tsv', 'gene1', 'gene2', 'pscore', 100, 'huttlin2021-HEK293T')
+    # full_workflow('../output/khoroshkin2024.preprocessed_PPIs.K562.standardized.tsv', 'gene1', 'gene2', 'conf_score', 100, 'khoroshkin2024-K562')
+    # full_workflow('../output/johnson2021.preprocessed_PPIs.HEK293T.standardized.tsv', 'gene1', 'gene2', 'pvalue', 100, 'johnson2021-HEK293T', pval=True)
+    full_workflow('../output/johnson2021.preprocessed_PPIs.jurkat.standardized.tsv', 'gene1', 'gene2', 'pvalue', 100, 'johnson2021-jurkat', pval=True)
+    full_workflow('../output/johnson2021.preprocessed_PPIs.HUVEC.standardized.tsv', 'gene1', 'gene2', 'pvalue', 100, 'johnson2021-HUVEC', pval=True)
