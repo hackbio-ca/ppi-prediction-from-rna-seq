@@ -120,8 +120,10 @@ git branch -d your-name
 | Huttlin *et al.*, (2021) [^2] | HCT116 |
 | Göös *et al.*, (2022) [^3] | HEK293 |
 | Khoroshkin *et al.*, (2024) [^4] | K562 |
+| Banks *et al.*, (2014) [^5] | HEK293 |
 
 [^1]: [Johnson, K. L. *et al.* Revealing protein-protein interactions at the transcriptome scale by sequencing. *Molecular Cell* **81,** 3877 (2021).](https://www.cell.com/molecular-cell/fulltext/S1097-2765(21)00574-8)
 [^2]: [Huttlin, E. L. *et al.* Dual proteome-scale networks reveal cell-specific remodeling of the human interactome. *Cell* **184**, 11 (2021).](https://doi.org/10.1016/j.cell.2021.04.011)
 [^3]: [Göös, H. *et al.* Human transcription factor protein interaction networks. *Nature Communications* **13**, (2022).](https://www.nature.com/articles/s41467-022-28341-5)
 [^4]: [Khoroshkin, M. *et al.* Systematic identification of post-transcriptional regulatory modules. *Nature Communications* **15**, (2024).](https://www.nature.com/articles/s41467-024-52215-7)
+[^5]: [Banks, C. *et al.* Controlling for Gene Expression Changes in Transcription Factor Protein Networks. *Molecular & Cellular Proteomics* **13**, (2014).](https://www.mcponline.org/article/S1535-9476(20)33081-4/fulltext)
