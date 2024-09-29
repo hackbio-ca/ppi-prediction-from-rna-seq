@@ -1,5 +1,8 @@
-library(dplyr)
+suppressPackageStartupMessages({
+  library(dplyr)
+})
 
+# define input/output paths and read
 johnson_path <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.tsv"
 khoroshkin_path <- "ppi-prediction-from-rna-seq/output/khoroshkin2024.preprocessed_PPIs.tsv"
 huttlin_path <- "ppi-prediction-from-rna-seq/output/huttlin2021.preprocessed_PPIs.tsv"
@@ -25,7 +28,6 @@ ranked_johnson_temp <- rank(johnson_df$logp, na.last = "keep", ties.method = "av
 ranked_khoroshkin_temp <- rank(khoroshkin$conf_score, na.last = "keep", ties.method = "average")
 ranked_huttlin_temp <- rank(huttlin$pscore, na.last = "keep", ties.method = "average")
 ranked_goos_temp <- rank(goos$conf_score, na.last = "keep", ties.method = "average")
-
 
 # Step 2: Standardize the ranked values by dividing by the maximum rank (excluding NA)
 standardized_ranked_johnson <- ranked_johnson_temp / max(ranked_johnson_temp, na.rm=T)

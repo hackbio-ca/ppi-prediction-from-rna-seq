@@ -28,6 +28,7 @@ proper_sig_huvec <- proper_sig %>%
     mutate(cell_line = "HUVEC") %>%
     select(gene1, gene2, pvalue, cell_line, source)
 
+# Decided to merge all df together to store in a single file
 proper_sig_all <- rbind(proper_sig_hek, proper_sig_jurkat, proper_sig_huvec)
 
 # save to file

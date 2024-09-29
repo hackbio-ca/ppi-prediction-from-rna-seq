@@ -52,6 +52,8 @@ mitab_formatted <- mitab_raw %>%
     mutate(cell_line = current_cell_line,
            source = author_year)
 
+# Deal with edge case where gene2 contains a vector of gene names
+# Expand all elements of vector so that they are contained in their own rows
 mitab_formatted_exp <- mitab_formatted %>%
   unnest(gene2)
 
