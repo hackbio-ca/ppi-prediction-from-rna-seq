@@ -2,3 +2,4 @@ slurm_scripts/*
 *env*
 data/*
 output/*
+*ipynb_checkpoints*
