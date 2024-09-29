@@ -1,19 +1,19 @@
 library(dplyr)
 
-johnson_path <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.csv"
-khoroshkin_path <- "ppi-prediction-from-rna-seq/output/khoroshkin2024.preprocessed_PPIs.csv"
-huttlin_path <- "ppi-prediction-from-rna-seq/output/huttlin2021.preprocessed_PPIs.csv"
-goos_path <- "ppi-prediction-from-rna-seq/output/goos2022.preprocessed_PPIs.csv"
+johnson_path <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.tsv"
+khoroshkin_path <- "ppi-prediction-from-rna-seq/output/khoroshkin2024.preprocessed_PPIs.tsv"
+huttlin_path <- "ppi-prediction-from-rna-seq/output/huttlin2021.preprocessed_PPIs.tsv"
+goos_path <- "ppi-prediction-from-rna-seq/output/goos2022.preprocessed_PPIs.tsv"
 
-johnson <- read.csv(johnson_path)
-khoroshkin <- read.csv(khoroshkin_path)
-huttlin <- read.csv(huttlin_path)
-goos <- read.csv(goos_path)
+johnson <- read.csv(johnson_path, sep = "\t")
+khoroshkin <- read.csv(khoroshkin_path, sep = "\t")
+huttlin <- read.csv(huttlin_path, sep = "\t")
+goos <- read.csv(goos_path, sep = "\t")
 
-output_johnson <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.standardized.csv"
-output_khoroshkin <- "ppi-prediction-from-rna-seq/output/khoroshkin2024.preprocessed_PPIs.standardized.csv"
-output_huttlin <- "ppi-prediction-from-rna-seq/output/huttlin2021.preprocessed_PPIs.standardized.csv"
-output_goos <- "ppi-prediction-from-rna-seq/output/goos2022.preprocessed_PPIs.standardized.csv"
+output_johnson <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.standardized.tsv"
+output_khoroshkin <- "ppi-prediction-from-rna-seq/output/khoroshkin2024.preprocessed_PPIs.standardized.tsv"
+output_huttlin <- "ppi-prediction-from-rna-seq/output/huttlin2021.preprocessed_PPIs.standardized.tsv"
+output_goos <- "ppi-prediction-from-rna-seq/output/goos2022.preprocessed_PPIs.standardized.tsv"
 
 # transform p values to -logp
 johnson_df <- johnson %>%
@@ -40,8 +40,8 @@ huttlin_ranks <- cbind(huttlin, standardized_ranked_huttlin) %>% rename(standard
 goos_ranks <- cbind(goos, standardized_ranked_goos) %>% rename(standardized_rank = "standardized_ranked_goos")
 
 # write to file
-write.csv(johnson_ranks, output_johnson, quote = F)
-write.csv(khoroshkin_ranks, output_khoroshkin, quote = F)
-write.csv(huttlin_ranks, output_huttlin, quote = F)
-write.csv(goos_ranks, output_goos, quote = F)
+write.table(johnson_ranks, output_johnson, quote = F, sep = "\t", row.names = F)
+write.table(khoroshkin_ranks, output_khoroshkin, quote = F, sep = "\t", row.names = F)
+write.table(huttlin_ranks, output_huttlin, quote = F, sep = "\t", row.names = F)
+write.table(goos_ranks, output_goos, quote = F, sep = "\t", row.names = F)
 

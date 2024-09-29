@@ -3,7 +3,7 @@ suppressPackageStartupMessages({
 })
 
 input_path <- "ppi-prediction-from-rna-seq/data/ppi/PROPER_v1.csv"
-output_path <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.csv"
+output_path <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.tsv"
 
 proper <- read.csv(input_path)
 
@@ -31,4 +31,4 @@ proper_sig_huvec <- proper_sig %>%
 proper_sig_all <- rbind(proper_sig_hek, proper_sig_jurkat, proper_sig_huvec)
 
 # save to file
-write.csv(proper_sig_all, output_path, row.names = FALSE)
+write.table(proper_sig_all, output_path, row.names = FALSE, quote = F, sep = "\t", row.names = F)
