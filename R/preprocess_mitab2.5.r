@@ -2,13 +2,12 @@ args <- commandArgs(trailingOnly = TRUE)
 
 suppressPackageStartupMessages({
   library(dplyr)
-    library(tidyr)
 })
 
 input_path <- args[1]
 # extract author and year name from the input and use for output naming
 author_year <- strsplit(basename(input_path), "_")[[1]][1]
-output_path <- paste0("ppi-prediction-from-rna-seq/output/", author_year, ".preprocessed_PPIs.tsv")
+output_path <- paste0("ppi-prediction-from-rna-seq/output/", author_year, ".preprocessed_PPIs.csv")
 
 # Lazy case handling of getting the cell lines... because we know what datasets 
 # were dealing with
@@ -52,9 +51,6 @@ mitab_formatted <- mitab_raw %>%
     mutate(cell_line = current_cell_line,
            source = author_year)
 
-mitab_formatted_exp <- mitab_formatted %>%
-  unnest(gene2)
+mitab_final <- data.frame(lapply(mitab_formatted, as.character), stringsAsFactors=FALSE)
 
-mitab_final <- data.frame(lapply(mitab_formatted_exp, as.character), stringsAsFactors=FALSE)
-
-write.table(mitab_final, output_path, quote = F, sep = "\t", row.names = F)
+write.csv(mitab_final, output_path, row.names = F)
