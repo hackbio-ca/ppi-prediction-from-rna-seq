@@ -9,15 +9,27 @@ suppressPackageStartupMessages({
 })
 
 # Compute CBS from gene-gene and protein-protein matrices
-compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line) {
+compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line,
+                        fix_format = TRUE, ppi_stat = "score") {
 
-  coexpr_matrix <- read_csv(coexpr_matrix) %>%
-    as.matrix()
-  rownames(coexpr_matrix) <- colnames(coexpr_matrix)
+  if (fix_format) {
+    coexpr_matrix <- fix_data(read_csv(coexpr_matrix))
+  } else {
+    coexpr_matrix <- read_csv(coexpr_matrix) %>%
+      as.matrix()
+    rownames(coexpr_matrix) <- colnames(coexpr_matrix)
+  }
 
-  bioid_matrix <- read_csv(bioid_matrix) %>%
-    column_to_rownames("gene2") %>%
-    as.matrix()
+  if (ppi_stat == "score") {
+    bioid_matrix <- read_csv(bioid_matrix) %>%
+      column_to_rownames("gene2") %>%
+      as.matrix()
+  } else {
+    bioid_matrix <- read_csv(bioid_matrix) %>%
+      column_to_rownames("gene2") %>%
+      mutate(across(everything(), ~ -log10(. + .Machine$double.xmin))) %>% 
+      as.matrix()
+  }
 
   # Initialize result storage
   predictive_scores <- data.frame(bait_gene = character(),
@@ -35,7 +47,6 @@ compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line) {
     # Step 1: Rank coexpression values for the bait gene
     coexpr_values <- coexpr_matrix[bait_gene, ]
     coexpr_ranks <- rank(-coexpr_values, ties.method = "average")
-    top_n_coexpr_genes <- names(coexpr_ranks[coexpr_ranks <= top_n])
 
     # Step 2: Rank prey proteins by confidence scores
     prey_scores <- bioid_matrix[, bait_gene]
@@ -66,12 +77,50 @@ compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line) {
   return(predictive_scores)
 }
 
-cell_lines <- c("hek293", "hek293t", "k562", "jurkat", "huvec")
+# Resolve coexpression matrix format issue
+fix_data <- function(data) {
+  num <- length(colnames(data)) - 1
+  keep <- colnames(data)[1:num - 1]
+  data <- data[1:(num - 1), 2:num]
+  data <- as.matrix(data)
+  colnames(data) <- keep
+  rownames(data) <- keep
+  return(data)
+}
+
 ## note: we have hek293t in both Johnson and Huttlin datasets
 
-lapply(cell_lines, function(cell_line) {
+# HEK293T (Huttlin)
+hek293T_h_cbs <- compute_cbs(paste0("RNA/all_hek293t_subset.csv"),
+                             paste0("PPI/hek293T_h_ppi_matrix.csv"),
+                             top_n = 100,
+                             cell_line = "hek293T_h")
+
+# HEK293
+hek293_cbs <- compute_cbs(paste0("RNA/all_hek293_subset.csv"),
+                          paste0("PPI/", "hek293", "_ppi_matrix.csv"),
+                          top_n = 100,
+                          cell_line = "hek293T")
+
+# K562
+k562_cbs <- compute_cbs(paste0(paste0("RNA/all_", "k562", "_subset.csv")),
+            paste0("PPI/", "k562", "_ppi_matrix.csv"),
+            top_n = 10,
+            cell_line = "k562")
+
+# johnson datasets
+## HEK293T
+compute_cbs(paste0("RNA/all_", "hek293t", "_subset.csv"),
+            paste0("PPI/", "hek293T_j", "_ppi_matrix.csv"),
+            top_n = 10,
+            cell_line = "hek293T_j",
+            ppi_stat = "pval")
+
+## HUVEC, JURKAT
+lapply(c("huvec", "jurkat"), function(cell_line) {
   compute_cbs(paste0("RNA/all_", cell_line, "_subset.csv"),
               paste0("PPI/", cell_line, "_ppi_matrix.csv"),
-              top_n = 100,
-              cell_line = cell_line)
+              top_n = 10,
+              cell_line = cell_line,
+              ppi_stat = "pval")
 })
