@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
 })
 
 # Compute CBS from gene-gene and protein-protein matrices
-compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line,
+compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, line,
                         fix_format = TRUE, ppi_stat = "score") {
 
   if (fix_format) {
@@ -73,7 +73,8 @@ compute_cbs <- function(coexpr_matrix, bioid_matrix, top_n, cell_line,
                                           auroc_score = auroc_score,
                                           stringsAsFactors = FALSE))
   }
-  write(predictive_scores, paste0("../output/", cell_line, "_cbs.csv"))
+  #write_csv(predictive_scores, paste0("../output/", cell_line, "_cbs.csv"))
+  write_csv(predictive_scores, paste0("final_cbs/", line, "_cbs.csv"))
   return(predictive_scores)
 }
 
@@ -94,33 +95,33 @@ fix_data <- function(data) {
 hek293T_h_cbs <- compute_cbs(paste0("RNA/all_hek293t_subset.csv"),
                              paste0("PPI/hek293T_h_ppi_matrix.csv"),
                              top_n = 100,
-                             cell_line = "hek293T_h")
+                             line = "hek293T_h")
 
 # HEK293
 hek293_cbs <- compute_cbs(paste0("RNA/all_hek293_subset.csv"),
-                          paste0("PPI/", "hek293", "_ppi_matrix.csv"),
+                          paste0("PPI/hek293_ppi_matrix.csv"),
                           top_n = 100,
-                          cell_line = "hek293T")
+                          line = "hek293")
 
 # K562
-k562_cbs <- compute_cbs(paste0(paste0("RNA/all_", "k562", "_subset.csv")),
-            paste0("PPI/", "k562", "_ppi_matrix.csv"),
-            top_n = 10,
-            cell_line = "k562")
+k562_cbs <- compute_cbs(paste0(paste0("RNA/all_k562_subset.csv")),
+                        paste0("PPI/k562_ppi_matrix.csv"),
+                        top_n = 10,
+                        line = "k562")
 
 # johnson datasets
 ## HEK293T
-compute_cbs(paste0("RNA/all_", "hek293t", "_subset.csv"),
-            paste0("PPI/", "hek293T_j", "_ppi_matrix.csv"),
+compute_cbs(paste0("RNA/all_hek293t_subset.csv"),
+            paste0("PPI/hek293T_j_ppi_matrix.csv"),
             top_n = 10,
-            cell_line = "hek293T_j",
+            line = "hek293T_j",
             ppi_stat = "pval")
 
 ## HUVEC, JURKAT
-lapply(c("huvec", "jurkat"), function(cell_line) {
-  compute_cbs(paste0("RNA/all_", cell_line, "_subset.csv"),
-              paste0("PPI/", cell_line, "_ppi_matrix.csv"),
+lapply(c("huvec", "jurkat"), function(line) {
+  compute_cbs(paste0("RNA/all_", line, "_subset.csv"),
+              paste0("PPI/", line, "_ppi_matrix.csv"),
               top_n = 10,
-              cell_line = cell_line,
+              line = line,
               ppi_stat = "pval")
 })
