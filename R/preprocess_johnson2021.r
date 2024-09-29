@@ -28,8 +28,17 @@ proper_sig_huvec <- proper_sig %>%
     mutate(cell_line = "HUVEC") %>%
     select(gene1, gene2, pvalue, cell_line, source)
 
+# ARCHIVED:
 # Decided to merge all df together to store in a single file
-proper_sig_all <- rbind(proper_sig_hek, proper_sig_jurkat, proper_sig_huvec)
-
+# proper_sig_all <- rbind(proper_sig_hek, proper_sig_jurkat, proper_sig_huvec)
 # save to file
-write.table(proper_sig_all, output_path, row.names = FALSE, quote = F, sep = "\t", row.names = F)
+# write.table(proper_sig_all, output_path, row.names = FALSE, quote = F, sep = "\t", row.names = F)
+
+# save each cell type to different file
+output_path_hek <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.HEK293T.tsv"
+output_path_jurkat <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.jurkat.tsv"
+output_path_huvec <- "ppi-prediction-from-rna-seq/output/johnson2021.preprocessed_PPIs.HUVEC.tsv"
+
+write.table(proper_sig_hek, output_path_hek, row.names = FALSE, quote = F, sep = "\t")
+write.table(proper_sig_jurkat, output_path_jurkat, row.names = FALSE, quote = F, sep = "\t")
+write.table(proper_sig_huvec, output_path_huvec, row.names = FALSE, quote = F, sep = "\t")
