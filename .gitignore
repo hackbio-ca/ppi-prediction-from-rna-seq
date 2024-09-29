@@ -1,3 +1,4 @@
 slurm_scripts/*
 *env*
 data/*
+output/*
