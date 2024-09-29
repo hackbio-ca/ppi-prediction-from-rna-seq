@@ -2,7 +2,7 @@ library(tidyverse)
 library(biomaRt)
 library(MetaMarkers)
 #####huvec
-hek293t <- read.table("GSE233957_raw_counts_GRCh38.p13_NCBI.tsv", sep = "\t", header = T)
+hek293t <- read.table("../data/GSE233957_raw_counts_GRCh38.p13_NCBI.tsv", sep = "\t", header = T)
 df <- hek293t
 
 cl_control <- as.matrix(df[,c(1, 2:4, 23:25)])
@@ -40,13 +40,9 @@ cl_cpm_fil_t_cor <- cor(cl_cpm_fil_transposed)
 write.table(cl_cpm_fil_t_cor, "hek293t_corr_mat.csv", sep = ",", quote = F)
 cl_cpm_fil_t_cor_1 <- as.data.frame(cl_cpm_fil_t_cor[1:10000,])
 
-write.table(cl_cpm_fil_t_cor_1, file = "hek293t_corr_mat.csv", sep = ",", col.names = F)
+write.table(cl_cpm_fil_t_cor_1, file = "../output/hek293t_corr_mat.csv", sep = ",", col.names = F)
 
 
-cl_cpm_fil_t_cor_small <- cl_cpm_fil_t_cor[1:1000, 1:1000]
-write.table(cl_cpm_fil_t_cor_small, "small_hek_corr_mat.csv", sep = ",", quote = F)
-genes_1k <- colnames(cl_cpm_fil_t_cor_small)
-write.table(genes_1k, "genes_1k_jurkat.tsv", sep = "\t", quote = F)
 
 
 genes_23k <- colnames(jurkat_cpm_fil_t_cor)
