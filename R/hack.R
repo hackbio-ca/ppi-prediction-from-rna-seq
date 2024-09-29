@@ -1,7 +1,7 @@
 library(tidyverse)
 library(biomaRt)
 #####huvec
-huvec <- read.table("GSE221514_raw_counts_GRCh38.p13_NCBI.tsv", sep = "\t", header = T)
+huvec <- read.table("../data/GSE221514_raw_counts_GRCh38.p13_NCBI.tsv", sep = "\t", header = T)
 df <- huvec
   
 cl_control <- as.matrix(df[,1:7])
@@ -35,4 +35,4 @@ entrez_id_cl_full <- entrez_id_cl_full[,2:7]
 cl_cpm_fil_transposed <- t(entrez_id_cl_full)
 cl_cpm_fil_t_cor <- cor(cl_cpm_fil_transposed)
 
-write.table(cl_cpm_fil_t_cor, "huvec_corr_mat.csv", sep = ",", quote = F)
+write.table(cl_cpm_fil_t_cor, "../output/huvec_corr_mat.csv", sep = ",", quote = F)
