@@ -1,6 +1,6 @@
 # ppi-prediction-from-rna-seq
 
-** Toronto Bioinformatics Hackathon, 2024**
+**Toronto Bioinformatics Hackathon, 2024**
 
 Construct a model to predict protein-protein interactions using RNA-seq data by identifying co-expressed gene groups and integrating with proteomics data.
 
